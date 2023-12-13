@@ -1,0 +1,86 @@
+#VRML_SIM R2022a utf8
+# license: Copyright Cyberbotics Ltd. Licensed for use only with Webots.
+# license url: https://cyberbotics.com/webots_assets_license
+# Model of an infra-red sensor of the Khepera III robot.
+# The lookup table was calibrated using data collected from a real Khepera III.
+# Measures were carried out between 0 and 44.5 cm using a white obstacle and a black ground.
+# Electronic part: Vishay TCRT5000
+
+PROTO Khepera3_DistanceSensor [
+  field SFVec3f translation 0 0 0
+  field SFRotation rotation  0 0 1 0
+  field SFString name "ds"
+  field SFFloat  aperture      0.05
+  field SFInt32  numberOfRays  2
+]
+{
+  DistanceSensor {
+    numberOfRays  IS numberOfRays 
+    aperture  IS aperture
+    translation IS translation
+    rotation IS rotation
+    name IS name
+    model "Khepera III infra-red sensor"
+    children [
+      Group {
+        children [
+          Transform {
+            translation 0 0 -0.002
+            children [
+              Shape {
+                appearance PBRAppearance {
+                  baseColor 0 0 1
+                  metalness 0
+                }
+                geometry DEF SPHERE Sphere {
+                  radius 0.0014
+                }
+              }
+            ]
+          }
+          Transform {
+            translation 0 0 0.002
+            children [
+              Shape {
+                appearance DEF BLACK PBRAppearance {
+                  baseColor 0.101961 0.101961 0.101961
+                  roughness 0.45
+                  metalness 0
+                }
+                geometry USE SPHERE
+              }
+            ]
+          }
+          Transform {
+            translation -0.0025 0 0
+            children [
+              Shape {
+                appearance USE BLACK
+                geometry Box {
+                  size 0.005 0.006 0.01
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+    lookupTable [
+	0.00 0.0005 0.002
+	0.02 0.0055 0.002
+	0.04 0.0105 0.002
+	0.06 0.0155 0.002
+	0.08 0.0205 0.002
+	0.10 0.0255 0.005
+	1.00 0.3000 0.01
+	1.50 0.4500 0.015
+	2.00 0.6000 0.02
+	3.00 0.9000 0.025
+	4.00 1.2000 0.03
+	4.01 999999 0.00
+    ]
+
+    type "infra-red"
+  }
+}
+
